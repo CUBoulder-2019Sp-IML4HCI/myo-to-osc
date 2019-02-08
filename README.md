@@ -4,7 +4,12 @@ This project provides a bridge between the Thalmic Myo Armband and OSC connected
 
 Please note that this project *requires* Python 3, and uses the `pyserial` and `python-osc` modules.
 
+
 # Usage
+## Wekinator
+The project sends to two addresses on localhost port 6448. The first is `/wek/imu` and the second is `/wek/emg`. This means that you will need to have two wekinator projects and update the `/wek/inputs` address accordingly.
+
+## Installation
 
 Install the dependencies:
 
