@@ -28,7 +28,7 @@ osc_client = udp_client.SimpleUDPClient("127.0.0.1", 6448)  # OSC Client for sen
 # gyro is a 3-tuple 
 def proc_imu(quat, acc, gyro):
     # sending all imu data to a wekinator project listening at /wek/imu
-    input_list = [quat[0], quat[1], quat[2], quat[3], acc[0], acc[1], acc[2], gyro[0], gyro[1], gryo[2] ]
+    input_list = [quat[0], quat[1], quat[2], quat[3], acc[0], acc[1], acc[2], gyro[0], gyro[1], gyro[2] ]
     osc_client.send_message("/wek/imu", input_list)
 
     """
