@@ -22,13 +22,20 @@ LOG_FORMAT = '%(message)s'
 
 osc_client = udp_client.SimpleUDPClient("127.0.0.1", 6448)  # OSC Client for sending messages.
 
+
 # quat is a 4-tuple
 # acc is a 3-tuple
 # gyro is a 3-tuple 
 def proc_imu(quat, acc, gyro):
+    # sending all imu data to a wekinator project listening at /wek/imu
     input_list = [quat[0], quat[1], quat[2], quat[3], acc[0], acc[1], acc[2], gyro[0], gyro[1], gryo[2] ]
-    osc_client.send_message("/wek/inputs", input_list)
-    #osc_client.send_message("/ori", quat)
+    osc_client.send_message("/wek/imu", input_list)
+
+    """
+    This is commented out because you don't need it, but it might help understand
+    what the input means
+    """
+    # osc_client.send_message("/ori", quat)
     # osc_client.send_message("/acc", acc)
     # osc_client.send_message("/gyr", gyro)
     #roll, pitch, yaw = toEulerAngle(quat[0], quat[1], quat[2], quat[3])
@@ -42,7 +49,9 @@ def proc_imu(quat, acc, gyro):
 def proc_emg(emg_data):
     proc_emg = tuple(map(lambda x: x / 127.0, emg_data))  # scale EMG to be in [-1, 1]
     # print("emg:", em_data, end='\r')
-    # osc_client.send_message("/emg", proc_emg)
+    
+    # Sending the emg data to /wek/emg
+    osc_client.send_message("/wek/emg", proc_emg)
     if args.logging:
         logging.info("{1}, emg, {0[0]}, {0[1]}, {0[2]}, {0[3]}, {0[4]}, {0[5]}, {0[6]}, {0[7]}".format(emg_data, datetime.datetime.now().isoformat()))
 
